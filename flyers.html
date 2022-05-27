@@ -1,0 +1,440 @@
+<! doctype html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
+    <link href="/Users/gateaueponge/Pictures/DNMADE 3/MACROPROJET/mode_d_emploi_et_ressources/interface/interface.css" rel="styl  esheet" type="text/css" />
+  
+    <style>
+    
+    :root {
+    --color-background: whitesmoke;
+    --color-pageSheet: #cfcfcf;
+    --color-pageBox: violet;
+    --color-paper: white;
+    --color-marginBox: transparent;
+    --pagedjs-crop-color: black;
+    --pagedjs-crop-shadow: white;
+    --pagedjs-crop-stroke: 1px;
+}
+
+/* To define how the book look on the screen: */
+@media screen {
+    body {
+        background-color: var(--color-background);
+    }
+
+    .pagedjs_pages {
+        display: flex;
+        width: calc(var(--pagedjs-width) * 2);
+        flex: 0;
+        flex-wrap: wrap;
+        margin: 0 auto;
+    }
+
+    .pagedjs_page {
+        background-color: var(--color-paper);
+        box-shadow: 0 0 0 1px var(--color-pageSheet);
+        margin: 0;
+        flex-shrink: 0;
+        flex-grow: 0;
+        margin-top: 5mm;
+    }
+
+    .pagedjs_first_page {
+        margin-left: var(--pagedjs-width);
+    }
+
+    .pagedjs_page:last-of-type {
+        margin-bottom: 5mm;
+    }
+
+    .pagedjs_pagebox{
+        box-shadow: 0 0 0 1px var(--color-pageBox);
+    }
+
+    .pagedjs_left_page{
+        z-index: 20;
+        width: calc(var(--pagedjs-bleed-left) + var(--pagedjs-pagebox-width))!important;
+    }
+
+    .pagedjs_left_page .pagedjs_bleed-right .pagedjs_marks-crop {
+        border-color: transparent;
+    }
+    
+    .pagedjs_left_page .pagedjs_bleed-right .pagedjs_marks-middle{
+        width: 0;
+    } 
+
+    .pagedjs_right_page{
+        z-index: 10;
+        position: relative;
+        left: calc(var(--pagedjs-bleed-left)*-1);
+    }
+
+    /* show the margin-box */
+
+    .pagedjs_margin-top-left-corner-holder,
+    .pagedjs_margin-top,
+    .pagedjs_margin-top-left,
+    .pagedjs_margin-top-center,
+    .pagedjs_margin-top-right,
+    .pagedjs_margin-top-right-corner-holder,
+    .pagedjs_margin-bottom-left-corner-holder,
+    .pagedjs_margin-bottom,
+    .pagedjs_margin-bottom-left,
+    .pagedjs_margin-bottom-center,
+    .pagedjs_margin-bottom-right,
+    .pagedjs_margin-bottom-right-corner-holder,
+    .pagedjs_margin-right,
+    .pagedjs_margin-right-top,
+    .pagedjs_margin-right-middle,
+    .pagedjs_margin-right-bottom,
+    .pagedjs_margin-left,
+    .pagedjs_margin-left-top,
+    .pagedjs_margin-left-middle,
+    .pagedjs_margin-left-bottom {
+        box-shadow: 0 0 0 1px inset var(--color-marginBox);
+    }
+
+    /* uncomment this part for recto/verso book : ------------------------------------ */
+
+    
+    .pagedjs_pages {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .pagedjs_first_page {
+        margin-left: 0;
+    }
+
+    .pagedjs_page {
+        margin: 0 auto;
+        margin-top: 5mm;
+    } 
+
+    .pagedjs_left_page{
+        width: calc(var(--pagedjs-bleed-left) + var(--pagedjs-pagebox-width) + var(--pagedjs-bleed-left))!important;
+    }
+
+    .pagedjs_left_page .pagedjs_bleed-right .pagedjs_marks-crop{
+        border-color: var(--pagedjs-crop-color);
+    }
+
+    .pagedjs_left_page .pagedjs_bleed-right .pagedjs_marks-middle{
+        width: var(--pagedjs-cross-size)!important;
+    } 
+
+    .pagedjs_right_page{
+        left: 0; 
+    } 
+    
+    
+    
+
+    /*--------------------------------------------------------------------------------------*/
+
+
+
+    /* uncomment this par to see the baseline : -------------------------------------------*/
+
+    
+    /* .pagedjs_pagebox {
+        --pagedjs-baseline: 22px;
+        --pagedjs-baseline-position: 5px;
+        --pagedjs-baseline-color: cyan;
+        background: linear-gradient(transparent 0%, transparent calc(var(--pagedjs-baseline) - 1px), var(--pagedjs-baseline-color) calc(var(--pagedjs-baseline) - 1px), var(--pagedjs-baseline-color) var(--pagedjs-baseline)), transparent;
+        background-size: 100% var(--pagedjs-baseline);
+        background-repeat: repeat-y;
+        background-position-y: var(--pagedjs-baseline-position);
+    }  */
+   
+
+    /*--------------------------------------------------------------------------------------*/
+}
+
+
+
+
+
+/* Marks (to delete when merge in paged.js) */
+
+.pagedjs_marks-crop{
+    z-index: 999999999999;
+  
+}
+
+.pagedjs_bleed-top .pagedjs_marks-crop, 
+.pagedjs_bleed-bottom .pagedjs_marks-crop{
+    box-shadow: 1px 0px 0px 0px var(--pagedjs-crop-shadow);
+}  
+
+.pagedjs_bleed-top .pagedjs_marks-crop:last-child,
+.pagedjs_bleed-bottom .pagedjs_marks-crop:last-child{
+    box-shadow: -1px 0px 0px 0px var(--pagedjs-crop-shadow);
+}  
+
+.pagedjs_bleed-left .pagedjs_marks-crop,
+.pagedjs_bleed-right .pagedjs_marks-crop{
+    box-shadow: 0px 1px 0px 0px var(--pagedjs-crop-shadow);
+}
+
+.pagedjs_bleed-left .pagedjs_marks-crop:last-child,
+.pagedjs_bleed-right .pagedjs_marks-crop:last-child{
+    box-shadow: 0px -1px 0px 0px var(--pagedjs-crop-shadow);
+}
+
+
+
+  @page  {
+
+@top-center {
+    content: "<Techies/Lab>";
+    color: navy;
+    font-family : 'Source Code Pro', monospace ;
+    font-weight:bold;
+    font-size : 0,7em;
+    
+margin-top: 8mm; }
+
+    @bottom-right-corner {
+    content: '';
+    background-size:contain;
+    background-repeat:no-repeat;
+    height: 3cm;
+    width: 3cm;
+   margin-top :-7mm;
+    margin-right: 5mm;
+    margin-left: -10mm;
+    
+    background-image: url('https://cdn.discordapp.com/attachments/688852271957803028/979008938991308821/logo_techies_sans_texte.png');
+    ;}
+
+    @bottom-right {
+     content: " ";
+    background-image: url("https://cdn.discordapp.com/attachments/281375540898955265/978662727616704512/logosansmarche.png");
+    width: 10cm;}
+
+    
+
+  }
+
+  @page  { size: A5;
+    margin: 5mm;  }
+  @page  {
+
+
+
+@bottom {
+    content: "informations : www.techieslab.org & info@techieslab.org";
+    font-family: 'Source Code Pro', monospace;
+    font-size:7pt;
+    font-weight:400;
+    color:navy;
+    text-align: left;
+    line-height: 1em;
+   width: 10cm;
+   margin-left: auto;
+   margin-right: auto;
+    margin-bottom: 4em; }
+
+    }
+
+
+
+
+
+
+
+   footer h2{color:navy;
+text-align: left;}
+ footer h3 {font-family: 'Source Code Pro', monospace;
+    font-weight: 300;
+  font-size: 9pt;
+  color: navy;}
+
+  img{width: 10%;
+ display: block;
+margin-left:auto;
+margin-right: auto;}
+
+  footer h2{font-family: 'Source Code Pro', monospace;
+font-size:9pt;
+font-weight:400;
+color:navy;
+text-align: left;
+line-height: 1em;
+margin-bottom: -0.7em;}
+
+
+p {font-family: 'Source Code Pro', monospace;
+font-size:17pt;
+font-weight:100;
+color:navy;
+text-align:left;
+
+
+
+
+}
+
+
+h1 {font-family: 'Source Code Pro', monospace;
+font-size:35pt;
+font-weight:900;
+color:navy;
+text-align:center;
+font-style: italic;
+  background-color: rgba(240, 128, 128, 0.5) ;
+  margin-top: 1.3cm;
+  margin-bottom: -3mm;
+
+
+
+}
+
+@page : {
+
+@left-bottom {
+    content: counter(page);
+    color: navy;
+    font-family : 'Source Code Pro', monospace ;
+    font-weight: 500;
+    font-size : 1em; }
+
+    @page {
+        size: 10mm 200mm;
+      margin: 5mm;
+    } 
+
+    
+
+  }
+
+  #gras {
+
+
+font-weight: 800;
+
+
+}
+
+
+#regular {
+
+
+font-weight: 300;
+
+
+}
+
+.italique
+
+{
+
+
+font-style:italic;
+font-size: 8pt;
+font-weight: 100;
+
+
+}
+
+.inscriptions 
+{
+
+margin-top: 1cm;
+font-style:italic;
+font-size: 10pt;
+padding: 5px; outline-color : rgba(240, 128, 128, 0.5)  ; outline-width: 0,5mm ; outline-style: solid; text-align: center;
+
+
+}
+.saut-de-page {break-before: page;}  
+    </style>
+    </head>
+
+    <body>
+    
+   
+    
+    <h1>Tech Mix 1</h1>
+<p id="gras"> Contenu&nbsp;:<span id="regular">&nbsp;programmation avec Scratch, robotique avec Cubetto et Robo Wunderkind, circuits électriques avec Makey Makey, construction Lego</span> Âge&nbsp;:&nbsp;<span id="regular">6-8 ans</span> Prix&nbsp;:&nbsp;<span id="regular">110€</span>  Horaire&nbsp;:&nbsp;<span id="regular">les dimanches de 9h30 à 10h30, du 1er mai au 26 juin, pas d’atelier le 29 mai (congé Ascension) </span> Lieu&nbsp;:&nbsp;<span id="regular">En personne à Fais-le-toi-même</span> Pré-requis&nbsp;:&nbsp;<span id="regular">aucun – il n’est pas nécessaire de savoir lire pour participer à cet atelier.</span></p>
+
+ <p class="italique">Voici 8 ateliers pour s'initier de façon ludique et intuitive au monde des techs et à la pensée algorithmique. Nos animateurs proposent des activités variées, de la programmation de petits et moyens robots à la création d'animations sur tablettes en passant par des activités débranchées (créer la plus haute tour avec des briques Lego possible, par exemple!) L'objectif? Stimuler la créativité et la pensée logique des enfants tout en s'amusant!</p>
+
+
+
+    <p class="inscriptions">Atelier tous les dimanches à 9h30</p>
+
+    <span class="saut-de-page"></span>
+
+     
+    <h1>Tech Mix 2</h1>
+<p id="gras"> Contenu&nbsp;:<span id="regular">&nbsp; programmation avec Scratch, robotique avec Lego Mindstorm,
+    circuits électriques avec Makey Makey, outils maker (impression 3D,
+    découpeuse laser, etc.)</span> Âge&nbsp;:&nbsp;<span id="regular">9-12 ans</span> Prix&nbsp;:&nbsp;<span id="regular">130€</span>  Horaire&nbsp;:&nbsp;<span id="regular">les dimanches de 11h à
+        12h15, du 1er mai au 26 juin, pas
+        d'atelier le 29 mai (congé Ascension)</span> Lieu&nbsp;:&nbsp;<span id="regular">En personne à Fais-le-toi-même</span> Pré-requis&nbsp;:&nbsp;<span id="regular">aucun</span></p>
+
+ <p class="italique">Voici 8 ateliers pour s'initier et approfondir nos
+    connaissances des techs. On utilisera des éléments
+    plus complexes - repères sur un plan orthonormé
+    (eh oui, la géométrie sert aux programmeurs!),
+    variables et clones - pour coder sur Scratch des
+    jeux plus complexes, du type « Snake » ou « Dyno ».
+    Les points seront comptés, alors sortez votre grand
+    jeu !
+    Du côté des robots, on passera aux robots Lego. Ces derniers offrent des
+    possibilités infinies, de la construction à la programmation. On s'amusera à
+    construire et programmer un petit rover qui pourra rouler sur Mars, bien
+    entendu! Et puis, pourquoi pas créer un lanceur... de bonbons?</p>
+
+
+
+    <p class="inscriptions">Atelier tous les dimanches à 11h00</p>
+
+    <span class="saut-de-page"></span>
+
+    <h1>Python x Spike</h1>
+    <p id="gras"> Contenu&nbsp;:<span id="regular">&nbsp;robotique avec Lego Spike, programmation en Python</span> Âge&nbsp;:&nbsp;<span id="regular">12-16 ans</span> Prix&nbsp;:&nbsp;<span id="regular">140€</span>  Horaire&nbsp;:&nbsp;<span id="regular">les dimanches de 13h30 à 15h, du 1er mai au 26 juin, pas
+        d’ateliers les 29 mai (congé Ascension) et 12 juin (préparation aux examens)</span> Lieu&nbsp;:&nbsp;<span id="regular">En personne à Fais-le-toi-même</span> Pré-requis&nbsp;:&nbsp;<span id="regular">aucun</span></p>
+    
+     <p class="italique">Comment apprendre LE langage de programmation le plus utilisé dans les
+        écoles et sur le marché du travail? En programmant des robots Spike
+        (LEGO) pardi! Voici 7 ateliers pour apprendre les rudiments du langage
+        Python et en profiter pour lancer toutes sortes de défis foufous à nos
+        robots.
+        L'atelier est un pré-requis pour faire partie de notre équipe de compétition
+        First Lego League Senior qui se retrouvera en septembre 2022.</p>
+    
+    
+    
+        <p class="inscriptions">Atelier tous les dimanches à 13h30</p>
+    
+        <span class="saut-de-page"></span>
+
+        <h1>Makers United</h1>
+        <p id="gras"> Content&nbsp;:<span id="regular">&nbsp;2D and 3D design, 3D printer, laser & vinyl cutter, hot press,
+            coding and electronics with Arduino</span> Age&nbsp;:&nbsp;<span id="regular">12-15 y.o.</span> Price&nbsp;:&nbsp;<span id="regular">140€</span> Schedule&nbsp;:&nbsp;<span id="regular">Sundays from 3:30 p.m. to 5 p.m., from May 1 to June 26, no
+                workshops on May 29 (Ascension Day) and June 12 (exam preparation)</span> Languages&nbsp;:&nbsp;<span id="regular">bilingual (English-French) workshops </span>Location&nbsp;:&nbsp;<span id="regular">In personne at Fais-le-toi-même</span> Prerequisites&nbsp;:&nbsp;<span id="regular">none</span></p>
+        
+         <p class="italique">These workshops are for young people
+            who want to create and code their own
+            objects using makers tools. The
+            possibilities are endless: a retro console, a
+            beautiful plaque for the bedroom, a
+            custom T-shirt, a stylish pendant, etc.
+            We will see how to use 2D and 3D design
+            software to give shape to our ideas thanks
+            to our maker tools: laser cutter, vinyl
+            cutter, 3D printer, thermoformer. We can
+            also use microcontrollers to add
+            connected buttons and movement. Time
+            to learn how to solder cables and code with the Arduino language!</p>
+        
+        
+        
+            <p class="inscriptions">Workshops every Sundays 3:30pm</p>
+        
+         
