@@ -1,0 +1,496 @@
+<! doctype html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
+    <link href="/Users/gateaueponge/Pictures/DNMADE 3/MACROPROJET/mode_d_emploi_et_ressources/interface/interface.css" rel="styl  esheet" type="text/css" />
+  
+    <style>
+
+:root {
+    --color-background: whitesmoke;
+    --color-pageSheet: #cfcfcf;
+    --color-pageBox: violet;
+    --color-paper: white;
+    --color-marginBox: transparent;
+    --pagedjs-crop-color: black;
+    --pagedjs-crop-shadow: white;
+    --pagedjs-crop-stroke: 1px;
+}
+
+/* To define how the book look on the screen: */
+@media screen {
+    body {
+        background-color: var(--color-background);
+    }
+
+    .pagedjs_pages {
+        display: flex;
+        width: calc(var(--pagedjs-width) * 2);
+        flex: 0;
+        flex-wrap: wrap;
+        margin: 0 auto;
+    }
+
+    .pagedjs_page {
+        background-color: var(--color-paper);
+        box-shadow: 0 0 0 1px var(--color-pageSheet);
+        margin: 0;
+        flex-shrink: 0;
+        flex-grow: 0;
+        margin-top: 10mm;
+    }
+
+    .pagedjs_first_page {
+        margin-left: var(--pagedjs-width);
+    }
+
+    .pagedjs_page:last-of-type {
+        margin-bottom: 10mm;
+    }
+
+    .pagedjs_pagebox{
+        box-shadow: 0 0 0 1px var(--color-pageBox);
+    }
+
+    .pagedjs_left_page{
+        z-index: 20;
+        width: calc(var(--pagedjs-bleed-left) + var(--pagedjs-pagebox-width))!important;
+    }
+
+    .pagedjs_left_page .pagedjs_bleed-right .pagedjs_marks-crop {
+        border-color: transparent;
+    }
+    
+    .pagedjs_left_page .pagedjs_bleed-right .pagedjs_marks-middle{
+        width: 0;
+    } 
+
+    .pagedjs_right_page{
+        z-index: 10;
+        position: relative;
+        left: calc(var(--pagedjs-bleed-left)*-1);
+    }
+
+    /* show the margin-box */
+
+    .pagedjs_margin-top-left-corner-holder,
+    .pagedjs_margin-top,
+    .pagedjs_margin-top-left,
+    .pagedjs_margin-top-center,
+    .pagedjs_margin-top-right,
+    .pagedjs_margin-top-right-corner-holder,
+    .pagedjs_margin-bottom-left-corner-holder,
+    .pagedjs_margin-bottom,
+    .pagedjs_margin-bottom-left,
+    .pagedjs_margin-bottom-center,
+    .pagedjs_margin-bottom-right,
+    .pagedjs_margin-bottom-right-corner-holder,
+    .pagedjs_margin-right,
+    .pagedjs_margin-right-top,
+    .pagedjs_margin-right-middle,
+    .pagedjs_margin-right-bottom,
+    .pagedjs_margin-left,
+    .pagedjs_margin-left-top,
+    .pagedjs_margin-left-middle,
+    .pagedjs_margin-left-bottom {
+        box-shadow: 0 0 0 1px inset var(--color-marginBox);
+    }
+
+    /* uncomment this part for recto/verso book : ------------------------------------ */
+
+    
+    /* .pagedjs_pages {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .pagedjs_first_page {
+        margin-left: 0;
+    }
+
+    .pagedjs_page {
+        margin: 0 auto;
+        margin-top: 10mm;
+    } 
+
+    .pagedjs_left_page{
+        width: calc(var(--pagedjs-bleed-left) + var(--pagedjs-pagebox-width) + var(--pagedjs-bleed-left))!important;
+    }
+
+    .pagedjs_left_page .pagedjs_bleed-right .pagedjs_marks-crop{
+        border-color: var(--pagedjs-crop-color);
+    }
+
+    .pagedjs_left_page .pagedjs_bleed-right .pagedjs_marks-middle{
+        width: var(--pagedjs-cross-size)!important;
+    } 
+
+    .pagedjs_right_page{
+        left: 0; 
+    } 
+    
+    
+    
+
+    /*--------------------------------------------------------------------------------------*/
+
+
+
+    /* uncomment this par to see the baseline : -------------------------------------------*/
+
+    
+    /* .pagedjs_pagebox {
+        --pagedjs-baseline: 22px;
+        --pagedjs-baseline-position: 5px;
+        --pagedjs-baseline-color: cyan;
+        background: linear-gradient(transparent 0%, transparent calc(var(--pagedjs-baseline) - 1px), var(--pagedjs-baseline-color) calc(var(--pagedjs-baseline) - 1px), var(--pagedjs-baseline-color) var(--pagedjs-baseline)), transparent;
+        background-size: 100% var(--pagedjs-baseline);
+        background-repeat: repeat-y;
+        background-position-y: var(--pagedjs-baseline-position);
+    }  */
+   
+
+    /*--------------------------------------------------------------------------------------*/
+}
+
+
+
+
+
+/* Marks (to delete when merge in paged.js) */
+
+.pagedjs_marks-crop{
+    z-index: 999999999999;
+  
+}
+
+.pagedjs_bleed-top .pagedjs_marks-crop, 
+.pagedjs_bleed-bottom .pagedjs_marks-crop{
+    box-shadow: 1px 0px 0px 0px var(--pagedjs-crop-shadow);
+}  
+
+.pagedjs_bleed-top .pagedjs_marks-crop:last-child,
+.pagedjs_bleed-bottom .pagedjs_marks-crop:last-child{
+    box-shadow: -1px 0px 0px 0px var(--pagedjs-crop-shadow);
+}  
+
+.pagedjs_bleed-left .pagedjs_marks-crop,
+.pagedjs_bleed-right .pagedjs_marks-crop{
+    box-shadow: 0px 1px 0px 0px var(--pagedjs-crop-shadow);
+}
+
+.pagedjs_bleed-left .pagedjs_marks-crop:last-child,
+.pagedjs_bleed-right .pagedjs_marks-crop:last-child{
+    box-shadow: 0px -1px 0px 0px var(--pagedjs-crop-shadow);
+}
+
+
+@page {
+  size: 148mm 210mm;
+
+}
+
+  @page :left {
+    margin-top: 10mm;
+  margin-right: 15mm;
+  margin-bottom: 25mm;
+  margin-left: 20mm;}
+  @page :left {
+@bottom-left {
+    content: counter(page);
+    color: navy;
+    font-family : 'Source Code Pro', monospace ;
+    font-weight: 500;
+    font-size : 1em; }
+
+    
+
+  }
+  @page :right {    margin-top: 10mm;
+  margin-right: 20mm;
+  margin-bottom: 25mm;
+  margin-left: 15mm;}
+  @page :right {
+@bottom-right {
+    content: counter(page);
+    color: navy;
+    font-family : 'Source Code Pro', monospace ;
+    font-weight: 500;
+    font-size : 1em; }
+
+    }
+    @page :first {
+      content: '';
+    background-size:contain;
+    background-repeat:no-repeat;
+    height: 210mm;
+    width: 148mm;
+   margin-top : auto;
+   margin-bottom: auto;
+    margin-right: auto;
+    margin-left: auto;
+    background-size: 80%;
+    background-position: center;
+    
+    background-image: url('https://cdn.discordapp.com/attachments/688852271957803028/979008938991308821/logo_techies_sans_texte.png');
+    ;} 
+
+    @page :first {
+
+
+@bottom-right {
+      content: none;
+     }
+    }
+
+ 
+
+
+.saut-de-page {break-before: page;}
+
+
+
+
+h1#title {
+  
+ string-set: Guide utilisateur content(text);
+} 
+   
+        @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        
+        p {font-family: 'Source Code Pro', monospace;
+            font-weight: 300;
+          font-size: 10pt;
+          color: navy;}
+        
+          ul {font-family: 'Source Code Pro', monospace;
+            font-weight: 1000;
+          font-size: 8pt;
+          color: navy;}
+        
+          .grande-liste {font-family: 'Source Code Pro', monospace;
+            font-weight: 100;
+          font-size: 8pt;
+          color: navy;}
+        
+        h1 {font-family: 'Source Code Pro', monospace;
+            font-weight: 800;
+            font-style: italic;
+            text-align: center;
+          background-color: rgba(240, 128, 128, 0.5) ;
+          color: navy;
+          
+}
+        
+          h2 {font-family: 'Source Code Pro', monospace;
+            font-weight: 600;
+          color: navy;
+          text-align:left}
+        
+            h3 {font-family: 'Source Code Pro', monospace;
+            font-weight: 700;
+            font-style: italic;
+          color: navy;
+          text-align:left;
+          font-size: 11pt;
+          line-height: 0.1em;
+        }
+
+          p  {font-family: 'Source Code Pro', monospace;
+            font-weight: 100;
+          font-size: 8pt;
+          color: navy;}
+
+          li {
+  list-style-type: none;
+  color: lightcoral;
+}
+
+
+.logo-couverture {width: 1cm;
+  height: 10cm;
+  display: block;
+    margin-left: auto;
+    margin-right: auto ;
+    margin-top: 0cm;
+    overflow: visible;
+    
+}
+
+.logo-illu {height: 3cm;
+  display: block;
+    margin-left: auto;
+    margin-right: auto ;
+    margin-top: 0.5cm;
+}
+
+.logo-petit {width:3.1cm;
+  display: block;
+    margin-left: auto;
+    margin-right: auto ;
+    margin-top: 0.5cm;
+    margin-bottom: 1cm;
+}
+
+.logo-texte {width:5.5cm;
+  display: block;
+    margin-left: auto;
+    margin-right: auto ;
+    margin-top: 0.5cm;
+}
+
+.saut-de-page {break-before: page;}
+.saut-de-page-apres {break-after: page;}
+
+
+
+
+          .encadrer-un-contenu {  padding: 5px; outline-color : rgba(240, 128, 128, 0.5)  ; outline-width: 0,5mm ; outline-style: solid;}
+          
+          .liste-bleue  {
+  list-style-type: none;
+  color: navy;
+  font-weight: 200;
+}
+   .titres-logotypes  {color:rgba(240, 128, 128);
+        text-align: center;
+      font-size: 15pt;}
+        
+
+ 
+          </style>
+
+       
+           
+  </head>
+  
+  <body>
+    
+
+   <span class="saut-de-page"></span>
+
+   <section class="saut-de-page"></section>
+
+    <h2 class="saut-de-page" > Guide clé-en-main pour l'utilisateur-codeur pour l'utilisation de la charte graphique. </h2>
+  
+    <h3 > Sommaire : </h3>
+    
+    <ul> <li>↦ Présentation de l'identité </li>
+    <li>↦ Types de supports et languages investis </li>
+    <li>↦ Règles d'usage</li>
+    <li>↦ Logotypes</li>
+    <li>↦ Informations complémentaires</li>
+    <li>↦ Pictogrammes</li> </ul>
+    
+    <section class="saut-de-page"></section>
+    
+    <H1>Présentation de l'identité </H1>
+     
+    <p>L'identité visuelle de Techies Lab s'appuie sur les compétances en codage informatique que possèdent les membres de l'association, qu'ils fassent partie du bureau ou qu'ils prennent part aux ateliers. Chacun peut participer à la créationd de supports de communication pour l'association, en suivant quelques règles.
+     Ce guide sert de charte graphique. Il permet à Techies Lab de communiquer aisémant tout en incarnant ses qualités : <b>didactique, ludicité, coopération, participation ouverte</b>.
+     Puisque tous les supports de communication sont générés à partir de fichiers codés, dans différents languages (mais principalement de l'HTML et du CSS) elle peut être réinvestié avec un ordinateur et un éditeur de code quelconque. Libre d'utilisation, l'identité visuelle est conçue pour être utilisée par Techies Lab sans avoir besoin de faire appel à un ou une graphiste. Elle est donc économique.
+    
+     Ce document fait office de charte graphique. Il contient toutes les informations nécessaires à la production de supports de communication.
+     Certains outils, tels que les pictogrammes et logos vectoriels ou les feuilles de styles CSS, sont inclus dans le document sous la forme de blocs de code. En voici un exemple :
+    </p>
+    
+    <p class="encadrer-un-contenu"> 
+      
+      &lt;html&gt;<br>
+      &lt;head&gt;<br>
+      &lt;title&gt; Voici à quoi ressemble un bloc de code &lt;/title&gt;<br>
+      &lt;/head&gt; <br>
+      &lt;html&gt;
+       </p>
+    
+            <p> Ils sont ainsi recencés dans un seul et même document, les rendant faciles d'accès. Ils peuvent être copiés et collés librement.</p>
+      
+    
+            <p> Ils sont ainsi recencés dans un seul et même document, les rendant faciles d'accès. Ils peuvent être copiés et collés librement.</p>
+    
+            <section class="saut-de-page"></section>
+    
+    <h1>Types de supports et languages investis</h1>
+    
+   <h3> Mode d'emploi : *Markdown* </h3>
+    
+    <p>Le document que vous consultez actuellement est soit un document Markdown, plus facile à lire qu'un *HTML*, soit un *PDF* généré à partir d'un *Markdown*. Cela permet, en plus de la facilité de consultation, de pouvoir générer des blocs de code pour mettre à disposition certains élements.  </p>
+    
+    <h3> Site web : *Html et CSS* </h3>
+    
+    <p> Le <b>CSS</b> n'est pas éditable (voir 3. Règles d'usage). L'*HTML* permet de modifier le contenu du site web en fonction des informations qui doivent être diffusées. </p>
+    
+   <h3> Plannings : <b>Html et CSS</b> </h3>
+    
+    <p> Proposés à chaque saison, ils sont aussi éditables par Techies Lab, afin de communiquer sur les ateliers proposés. Ce sont les fichiers qui font le plus appel aux pictogrammes. Leur usage est décrit ci-après. </p>
+    
+    <h3>Publications : <b>Html, CSS et librairie Paged.js</b> </h3> 
+    
+    <p> Les flyers, livrets, compte-rendus et tout autre document imprimé est mis en page en *HTML* et *CSS*. On fera appel à la librairie *Paged.Js* afin de rendre le document imprimable sur le format de papier nécessaire. Elle permet aussi de faire ce qu'on appelle la <b><i>pagination</i></b> lorsqu'un document est sur plusieurs pages, comme pour un livret.
+    
+    <b>Paged.js</b> est une librairie Open Source, fondée par Adam Hyde et actuellement développée par Julie Blanc, Fred Chasen et Julien Taquet. Pour plus d'informations et de documentation, consultez le site web : <https://pagedjs.org/></p>
+    
+    <h3> Pictogrammes et logotypes : <b>SVG</b></h3>
+    
+  <p> Il vous sera régulièrement proposé de séléctionner des icônes vectorielles dans vos documents. Ce sont généralement les logotypes de l'association ou des pictogrammes au choix, notamment pour les plannings. Ils font partie de l'identité visuelle et sont obligatoires. Pour les inclure dans vos documents, il vous suffira de copier-coller les codes <b>SVG</b> qui sont consultables en 4. Logotypes ainsi qu'en 6. Pictogrammes. </p>
+    
+    <h1> Règles d'usage : </h1>
+    
+   <p class="grande-liste"> ↦ Les feuilles de style <b>CSS</b> représentent la mise en forme des supports. Ils renferment les lignes de code permettant la cohérance de l'identité visuelle <b>et ne doivent pas être modifiés</b>.<br>
+    ↦ Chaque fichier <b>HTML</b> renferme une structure générale qui ne doit pas être alterée. Tout y est systématiquement expliqué au travers des commentaires. Le contenu des balises <b>HTML</b> peut être modifié en fonction des besoins.<br>
+    ↦ Vous pourrez inclure les pictogrammes dans vos documents en effecutant un <i>ctrl+c/ctrl+v</i></p>
+    
+    <p>Pour trouver où les inclure, vous pouvez faire une recherche grâce au <i>ctrl+f</i>. Voici les termes clés à rechercher :</p>
+
+    <ul><li>Inserer_SVG_type_d_atelier</li>
+ <li>Inserer_SVG_lieu_de_l_atelier </li>
+ <li> Inserer_SVG_age </li>
+   <li>Inserer_SVG_horaire</li></ul>
+    
+    <p>On utilisera toujours le même <i>pictogramme</i> pour une <i>info</i> sur <i>un document</i>. Pour chaque catégorie, vous pouvez choisir celui de votre choix, dans une liste pré-définie. Cette liste est à retrouver dans la version numérique du mode d'emploi ainsi que dans les fichiers de l'identité.</p>
+    <ul><li>↦ Les logos ne peuvent être modifiés.</li>
+      <li>↦ Les couleurs de l'identité sont indexées en <b>css</b>, dans la balise style comme ceci :</li>
+    </ul>
+    <p class="encadrer-un-contenu"> 
+    
+             bleu : {color: navy} <br>
+    
+            rose : {color: lightcoral} <br>
+    
+            blanc : {color: white} <br>
+    
+            éventuel arrière-plan, si écrit en bleu : <br>
+            {background-color: rgba(240, 128, 128, 0.5)} </p>
+    
+    
+    
+  <p> Les fonds restent blancs.</p> 
+   <ul><li class="liste-bleue" >- La police de caractère utilisée est exclusivement la <i>Source Code Variable</i>. Un fichier .otf a été délivré avec la charte graphique. En cas de besoin, vous pouvez la retrouver sur le site v-fonts.com ou google fonts. Des liens cliquable sont dipsponibles dans la version numérique du monde d'emploi.
+   </li></ul> 
+   
+
+
+  
+    
+   <H1>Logotypes</H1> 
+
+   <p>Le code SVG de chaque logo peut être retrouvé au choix dans le mode d'emploi markdown ou en ouvrant les fichiers .svg dans un éditeur de code.</p>
+   
+  <h2 class="titres-logotypes">Logotype</h2>
+   
+   <img class="logo-illu" src="https://cdn.discordapp.com/attachments/688852271957803028/971036763151818772/logotype_2.jpg">
+   
+   
+   <h2 class="titres-logotypes">Logotype textuel</h2>
+   
+   <img class="logo-texte" src="https://cdn.discordapp.com/attachments/688852271957803028/971036763508326510/logotype_textuel.jpg">
+
+   
+   <img class="logo-petit" src="https://cdn.discordapp.com/attachments/688852271957803028/971036763722223666/logotype_textuel2.jpg">
+   
+
+   <p>En cas de soucis, vous pouvez générer un logo textuel par vous même.
+   Écrivez simplement "<Techies/Lab>" ou <T/L> en <b>SOURCE CODE BOLD</b> et en <b>NAVY</b>.</p>
+
+   <section class="saut-de-page"></section>
+  </body>
